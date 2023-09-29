@@ -40,10 +40,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         //密码比对
-        // TODO 后期需要进行md5加密，然后再进行比对
+        // 对前端输入传递过来的明纹密码进行加密，以便和数据库中加密后的密码匹配
+        password=DigestUtils.md5DigestAsHex(password.getBytes());
         if (!password.equals(employee.getPassword())) {
             //密码错误
-            throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
+            throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);//输出常量类 message类的提示信息
         }
         //状态是否被锁定 ，0代表禁用，1代表启用
         if (employee.getStatus() == StatusConstant.DISABLE) {
