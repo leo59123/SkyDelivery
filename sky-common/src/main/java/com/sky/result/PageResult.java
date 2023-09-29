@@ -1,4 +1,5 @@
 package com.sky.result;
+//后端的一些返回结果
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

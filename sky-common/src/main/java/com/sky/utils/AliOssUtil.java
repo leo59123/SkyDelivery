@@ -1,4 +1,5 @@
 package com.sky.utils;
+//工具类
 
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;

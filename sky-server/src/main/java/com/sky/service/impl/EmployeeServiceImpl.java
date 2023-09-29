@@ -35,7 +35,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         //2、处理各种异常情况（用户名不存在、密码不对、账号被锁定）
         if (employee == null) {
             //账号不存在
-            throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
+            throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);//自定义异常类，代表账号不存在，放置在common中
+            // 然而抛出异常是需要进行捕获的，在./hander 中那个全局异常捕获中统一处理，用父类和继承来处理
         }
 
         //密码比对
@@ -44,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             //密码错误
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         }
-
+        //状态是否被锁定 ，0代表禁用，1代表启用
         if (employee.getStatus() == StatusConstant.DISABLE) {
             //账号被锁定
             throw new AccountLockedException(MessageConstant.ACCOUNT_LOCKED);

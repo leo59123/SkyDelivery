@@ -1,4 +1,5 @@
 package com.sky.properties;
+//springboot中的一些配置属性类
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

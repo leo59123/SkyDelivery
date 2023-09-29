@@ -1,4 +1,5 @@
 package com.sky.entity;
+//实体，通产和数据库中的表相对应
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

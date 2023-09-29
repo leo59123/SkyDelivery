@@ -1,5 +1,5 @@
 package com.sky.vo;
-
+//视图对象，为前端展示数据提供的对象
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
