@@ -1,5 +1,7 @@
 package com.sky.mapper;
 
+import com.github.pagehelper.Page;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,4 +29,12 @@ public interface EmployeeMapper {
             "(#{name},#{username},#{password},#{phone},#{sex},#{idNumber},#{createTime},#{updateTime},#{createUser},#{updateUser},#{status})")
     //调用注解 insert语句来插入除 ID以外的数据，ID等待后续获得
     void insert(Employee employee);
+
+    /**
+     * 分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
+    //此时因为涉及到动态的page号，因此用单条sql就不太方便了，我们用Mybatis配置文件在yml中配置查询位置，然后在mapper/*.xml中配置sql
+    Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 }

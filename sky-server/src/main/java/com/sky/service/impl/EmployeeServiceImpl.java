@@ -1,16 +1,20 @@
 package com.sky.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
+import com.sky.result.PageResult;
 import com.sky.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +22,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+/**
+ *
+ */
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -89,5 +97,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //用Mapper 将新数据持久化到数据库
         employeeMapper.insert(employee);
+    }
+
+    /**
+     * 分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
+    public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
+        //底层实际上是 实现select & from employee limit 0,10这样子  ，而DTO中应该给了我们需要的参数
+        // 正常做的话，我们要利用参数计算每次查询的页和位置，然后执行对应select 操作
+        // PageHelper 插件：用框架给出的工具帮我们实现一定的功能，只要传入页码和页数
+        PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());//怎么做到的呢？底层用ThreadLocal存储，计算分页，然后生成动态sql
+
+        Page<Employee> page=employeeMapper.pageQuery(employeePageQueryDTO);//到mapper层对数据库进行操作，分页查询
+
+        //从插件查到的 page对象中获取 响应信息的对象
+        long total = page.getTotal();
+        List<Employee> records = page.getResult();
+
+        return new PageResult(total,records );
     }
 }
