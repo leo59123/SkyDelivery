@@ -37,4 +37,11 @@ public interface EmployeeMapper {
      */
     //此时因为涉及到动态的page号，因此用单条sql就不太方便了，我们用Mybatis配置文件在yml中配置查询位置，然后在mapper/*.xml中配置sql
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+
+    /**
+     * 根据主键动态修改属性
+     * @param employee
+     */
+    void update(Employee employee);//在mapper/*.xml中配置动态sql
 }
