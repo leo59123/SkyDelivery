@@ -121,4 +121,29 @@ public class EmployeeController {
         employeeService.startOrStop(status,id);
         return Result.success();
     }
+
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询员工信息")
+    public Result<Employee> getById(@PathVariable("id") Long id){//通过路径参数获取id，执行查询并利用Employee对象返回
+        Employee employee =employeeService.getById(id);//service层
+        return Result.success(employee);
+    }
+
+    /**
+     *编辑员工信息
+     * @param employeeDTO
+     * @return
+     */
+    @ApiOperation("编辑员工信息")
+    @PutMapping//路径不用写，就是类的源路径
+    public Result update(@RequestBody EmployeeDTO employeeDTO){//和新增员工相似，传入的都是EmployeeDTO类型数据
+        log.info("编辑员工信息:{}",employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success();//put操作,直接返回状态码就行无额外信息
+    }
 }

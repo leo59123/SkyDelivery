@@ -139,4 +139,38 @@ public class EmployeeServiceImpl implements EmployeeService {
         //使用更通用的更新方法：传入employee对象
         employeeMapper.update(employee);
     }
+
+    /**
+     * 根据id查询员工
+     * @param id
+     * @return
+     */
+    public Employee getById(Long id){
+        Employee employee=employeeMapper.getById(id);
+        //调用mapper查询对象信息
+
+        //注意额外处理下密码，因为返回时连密码前端也可以看到，即使MD5加密也不能看到
+        employee.setPassword("****");
+        return employee;
+    }
+
+    /**
+     * 编辑员工信息
+     * @param employeeDTO
+     */
+
+    public void update(EmployeeDTO employeeDTO){
+        Employee employee=new Employee();
+        //本质上和之前修改状态可以调用一样的 mapper/update
+        //但是因为此时传入的对象是DTO所以需要封装到employee对象中去
+        BeanUtils.copyProperties(employeeDTO,employee);//DTO -> employ
+
+        //修改操作和修改人需要额外设置,获取修改人的id和新增员工逻辑一致,都是用BaseContext,在拦截器中获得并LocalThread保存
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+
+        employeeMapper.update(employee);//重用之前的update操作
+
+
+    }
 }
