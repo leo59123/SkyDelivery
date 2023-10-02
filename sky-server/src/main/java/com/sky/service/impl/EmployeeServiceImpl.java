@@ -86,14 +86,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         //设置默认密码,注意MD5加密
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));//同样使用常量类来方便维护
 
-        //设置创建时间，修改时间
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
-
-        //设置创建人，修改人ID  ,从ThreadLocal封装对象中获取拦截器动态获取的 用户id
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        //设置创建时间，修改时间
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        //设置创建人，修改人ID  ,从ThreadLocal封装对象中获取拦截器动态获取的 用户id
+//        employee.setCreateUser(BaseContext.getCurrentId());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
 
         //用Mapper 将新数据持久化到数据库
         employeeMapper.insert(employee);
@@ -165,9 +163,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         //但是因为此时传入的对象是DTO所以需要封装到employee对象中去
         BeanUtils.copyProperties(employeeDTO,employee);//DTO -> employ
 
-        //修改操作和修改人需要额外设置,获取修改人的id和新增员工逻辑一致,都是用BaseContext,在拦截器中获得并LocalThread保存
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        //修改操作和修改人需要额外设置,获取修改人的id和新增员工逻辑一致,都是用BaseContext,在拦截器中获得并LocalThread保存
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.update(employee);//重用之前的update操作
 
