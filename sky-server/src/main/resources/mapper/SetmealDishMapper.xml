@@ -20,13 +20,6 @@
         </foreach>
     </select>
 
-    <select id="getDishIdsBySetmealId" resultType="java.lang.Long">
-        select dish_id from setmeal_dish where setmeal_id in
-        <foreach collection="setmealIds" item ="setmealId" separator="," open="(" close=")">
-            #{setmealId}
-        </foreach>
-    </select>
-
     <!--delete from setmeal_dish where setmeal_id in (ids[1],ids[2], , , )-->
     <delete id="deleteBySetmealIds" >
         delete from setmeal_dish where setmeal_id in
