@@ -42,4 +42,11 @@ public interface SetmealService {
      * @param setmealDTO
      */
     void updateWithDishes(SetmealDTO setmealDTO);
+
+    /**
+     * 套餐的启用和禁用
+     * @param status
+     * @param id
+     */
+    void startOrStop(Integer status, Long id);
 }
