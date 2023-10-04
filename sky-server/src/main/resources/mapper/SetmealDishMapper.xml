@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.SetmealDishMapper">
+<!--  主键id是插入后才生成的,执行sql的时候不包含这条  -->
+    <insert id="insertBatch" parameterType="list">
+        insert into setmeal_dish
+        (setmeal_id,dish_id,name,price,copies)
+        values
+        <foreach collection="setmealDishes" item="sd" separator=",">
+            (#{sd.setmealId},#{sd.dishId},#{sd.name},#{sd.price},#{sd.copies})
+        </foreach>
+    </insert>
 
 
     <select id="getSetmealIdsByDishIds" resultType="java.lang.Long">
@@ -10,4 +19,21 @@
             #{dishId}
         </foreach>
     </select>
+
+    <select id="getDishIdsBySetmealId" resultType="java.lang.Long">
+        select dish_id from setmeal_dish where setmeal_id in
+        <foreach collection="setmealIds" item ="setmealId" separator="," open="(" close=")">
+            #{setmealId}
+        </foreach>
+    </select>
+
+    <!--delete from setmeal_dish where setmeal_id in (ids[1],ids[2], , , )-->
+    <delete id="deleteBySetmealIds" >
+        delete from setmeal_dish where setmeal_id in
+        <foreach collection="setmealIds" item="setmealId" open="(" close=")" separator=",">
+            #{setmealId}
+        </foreach>
+    </delete>
+
+
 </mapper>

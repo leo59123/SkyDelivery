@@ -43,6 +43,7 @@ public interface DishMapper {
     Dish getById(Long id);
 
 
+
     /**
      * 简单的根据主键来删除
      * @param id
@@ -62,4 +63,12 @@ public interface DishMapper {
      */
     @AutoFill(value=OperationType.UPDATE)//自动填充修改公共字段
     void update(Dish dish);//最好写成动态的,有值不为空再修改
+
+
+    /**
+     * 动态条件查询菜品
+     * @param dish
+     * @return
+     */
+    List<Dish> list(Dish dish);
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.SetmealMapper">
+<!--  不需要提供id属性,插入后将 id 返回并赋值给 setmeal实体的id属性-->
+    <insert id="insert" parameterType="Setmeal" useGeneratedKeys="true" keyProperty="id">
+        insert into setmeal (category_id, name, price, status, description, image, create_time, update_time, create_user, update_user)
+        values
+            (#{categoryId}, #{name}, #{price}, #{status}, #{description}, #{image}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
+    </insert>
+
+    <!--  根据名称,分类名(也就是说还需要联合查询分类表得到名字),售卖状态来查询  -->
+    <select id="pageQuery" resultType="com.sky.vo.SetmealVO">
+        select s.* ,c.name from setmeal s left outer join category c on s.category_id=c.id
+        <where>
+            <if test="name !=null">
+                and s.name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId !=null">
+                and s.category_id like concat('%',#{categoryId},'%')
+            </if>
+            <if test="status !=null">
+                and s.status like concat('%',#{status},'%')
+            </if>
+        </where>
+        order by s.create_time desc
+    </select>
+
+<!--delete from setmeal where id in (ids[1],ids[2] , , ,)-->
+    <delete id="deleteBatch">
+        delete from setmeal where id in
+        <foreach collection="ids" item="id" open="( " close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

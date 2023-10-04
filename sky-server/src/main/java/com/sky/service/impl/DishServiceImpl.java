@@ -167,4 +167,30 @@ public class DishServiceImpl implements DishService {
         }
 
     }
+
+//    /**
+//     * 根据分类id查询菜品
+//     * @param categoryId
+//     * @return
+//     */
+//    public DishVO getByCatelogId(Long categoryId) {
+//        //只需要根据分类ID查询对应的菜品表
+//        Dish dish = dishMapper.getByCategoryId(categoryId);
+//        //封装到VO中
+//        DishVO dishVO = new DishVO();
+//        BeanUtils.copyProperties(dish,dishVO);
+//        return dishVO;
+//    }
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    public List<Dish> list(Long categoryId) {
+        Dish dish = Dish.builder()
+                .categoryId(categoryId)
+                .status(StatusConstant.ENABLE)
+                .build();
+        return dishMapper.list(dish);
+    }
 }
