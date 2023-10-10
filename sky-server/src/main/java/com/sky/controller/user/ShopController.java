@@ -26,7 +26,7 @@ public class ShopController {//用户端不能修改店铺状态,同时bean的�
     public Result<Integer> getStatus(){
         Integer shopStatus = (Integer)redisTemplate.opsForValue().get("SHOP_STATUS");
         log.info("查询到店铺状态:",shopStatus==1?"营业中":"打烊中");
-        return Result.success();
+        return Result.success(shopStatus);
     }
 
 
