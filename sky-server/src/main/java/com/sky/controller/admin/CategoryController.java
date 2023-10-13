@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 分类管理
  */
-@RestController
+@RestController//和@Service Component等作用是自动注册bean，不需要再xml文件中配置<bean></bean>
 @RequestMapping("/admin/category")
 @Api(tags = "分类相关接口")
 @Slf4j

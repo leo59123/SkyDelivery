@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-@Data
+@Data  //lombok 工具库，省去大量的set\get 方法，代码更简洁
 public class CategoryDTO implements Serializable {
 
     //主键
