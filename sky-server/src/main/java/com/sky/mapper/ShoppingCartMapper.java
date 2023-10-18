@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 @Mapper
 public interface ShoppingCartMapper {
 
@@ -13,7 +15,7 @@ public interface ShoppingCartMapper {
      * @param shoppingCart
      * @return
      */
-    ShoppingCart list(ShoppingCart shoppingCart);//因为根据菜品和套餐区分查询类型,所以我们需要生成动态sql
+    List<ShoppingCart> list(ShoppingCart shoppingCart);//因为根据菜品和套餐区分查询类型,所以我们需要生成动态sql
 
     /**
      * 修改购物车中信息的数量

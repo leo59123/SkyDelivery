@@ -41,11 +41,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCart.setUserId(BaseContext.getCurrentId());
 
         //查询数据
-        ShoppingCart result=shoppingCartMapper.list(shoppingCart);
+        List<ShoppingCart> list=shoppingCartMapper.list(shoppingCart);
 
-        if(result!=null) {//已经存在
+        if(list!=null&&!list.isEmpty()) {//已经存在
 
             //更新菜品数量
+            ShoppingCart result=list.get(0);//查出唯一的元素
             result.setNumber(result.getNumber()+1);
 
             shoppingCartMapper.updateNumberById(result);
@@ -84,4 +85,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     }
 
+    /**
+     * 查看购物车
+     * @return
+     */
+    public List<ShoppingCart> list(){
+        ShoppingCart shoppingCart =ShoppingCart.builder()
+                .id(BaseContext.getCurrentId())
+                .build();
+        List<ShoppingCart> shoppingCarts=shoppingCartMapper.list(shoppingCart);
+        return shoppingCarts;
+    }
 }
