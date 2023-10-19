@@ -91,7 +91,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      */
     public List<ShoppingCart> list(){
         ShoppingCart shoppingCart =ShoppingCart.builder()
-                .id(BaseContext.getCurrentId())
+                .userId(BaseContext.getCurrentId())
                 .build();
         List<ShoppingCart> shoppingCarts=shoppingCartMapper.list(shoppingCart);
         return shoppingCarts;
