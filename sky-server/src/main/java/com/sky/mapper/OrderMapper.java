@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.core.annotation.Order;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Mapper //注意这是一个接口（因为Mybatis要求Mapper接口需要对数据访问逻辑进行抽象），并且需要添加注解，因为可以依赖注入来管理
 public interface OrderMapper {
     /**
@@ -41,4 +44,13 @@ public interface OrderMapper {
 
     @Select("select count(* ) from orders where status=#{status}")
     Integer countStatus(Integer status);
+
+    /**
+     * 查询超时订单
+     * @param status
+     * @param orderTime
+     * @return
+     */
+    @Select("select * from orders where status =#{status} and order_time<#{orderTime}")
+    List<Orders> getByStatusAndOrderTimeLT(Integer status, LocalDateTime orderTime);
 }
