@@ -22,4 +22,7 @@ public interface UserMapper {
      * @param user
      */
     void insert(User user);//由于插入后需要对主键赋值,后续要用到,所以
+
+    @Select("select * from user where id=#{userId}")
+    User getById(Long userId);
 }

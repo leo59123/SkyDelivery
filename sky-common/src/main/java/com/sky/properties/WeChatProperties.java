@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "sky.wechat")
-@Data
+@Data//Lombok库提供的注解，用于自动生成一些常见的Java类方法，如equals()、hashCode()、toString()、getter和setter方法等
 public class WeChatProperties {
 
     private String appid; //小程序的appid
