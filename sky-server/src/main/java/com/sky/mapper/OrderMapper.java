@@ -10,6 +10,7 @@ import org.springframework.core.annotation.Order;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper //注意这是一个接口（因为Mybatis要求Mapper接口需要对数据访问逻辑进行抽象），并且需要添加注解，因为可以依赖注入来管理
 public interface OrderMapper {
@@ -53,4 +54,10 @@ public interface OrderMapper {
      */
     @Select("select * from orders where status =#{status} and order_time<#{orderTime}")
     List<Orders> getByStatusAndOrderTimeLT(Integer status, LocalDateTime orderTime);
+
+    /**
+     * 根据多个条件查询营业额数据
+     * @return
+     */
+    Double sumByMap(Map map);
 }
